@@ -15,11 +15,43 @@
  */
 
 /* Common.js package manager support (e.g. ComponentJS, WebPack) */
-if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.exports === exports) {
-  module.exports = 'ui.router.tabs';
-}
+//if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.exports === exports) {
+//  module.exports = 'ui.router.tabs';
+//}
 
 angular.module('ui.router.tabs', []);
+angular.module('ui.router.tabs').directive(
+  'tabsOuter', ['$rootScope', '$state', function($rootScope, $state) {
+
+    return {
+      restrict: 'E',
+      scope: {
+        tabsOuterData: '=data',
+        tabsOuterRouteConfig: '=route',
+      },
+      link: function(scope) {
+      }
+      controller: ['$scope','$stateProvider', function($scope,$stateProvider) {
+         }],
+      templateUrl: function(element, attributes) {
+        return attributes.templateUrl || 'ui-router-tabsOuter-default-template.html';
+      }
+    };
+}]
+).run(
+['$templateCache', function($templateCache) {
+    var DEFAULT_TEMPLATE = '<div> ' +
+       '<tabset class="panel panel-default ng-scope" type="{{type}}"  role="tablist" vertical="{{vertical}}" ' +
+      'justified="{{justified}}">' + 
+         '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
+        '<tab role="tab" class="tab" id="tab_{{tab.heading}}" aria-controls="panel_{{tab.heading}}" ng-repeat="tab in tabset.tabs" heading="{{tab.heading}}" ' +
+      'active="tab.active" disable="tab.disable" ng-click="go(tab)" aria-selected="{{tab.active}}" tabindex="0">' +
+      '</tab></tabset></div>';
+    
+
+    $templateCache.put('ui-router-tabsOuter-default-template.html', DEFAULT_TEMPLATE);
+}]
+);
 angular.module('ui.router.tabs').directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
 
