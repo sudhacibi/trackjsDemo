@@ -20,38 +20,7 @@
 //}
 
 angular.module('ui.router.tabs', []);
-angular.module('ui.router.tabs').directive(
-  'tabsOuter', ['$rootScope', '$state', function($rootScope, $state) {
 
-    return {
-      restrict: 'E',
-      scope: {
-        tabsOuterData: '=data',
-        tabsOuterRouteConfig: '=route',
-      },
-      link: function(scope) {
-      }
-      controller: ['$scope','$stateProvider', function($scope,$stateProvider) {
-         }],
-      templateUrl: function(element, attributes) {
-        return attributes.templateUrl || 'ui-router-tabsOuter-default-template.html';
-      }
-    };
-}]
-).run(
-['$templateCache', function($templateCache) {
-    var DEFAULT_TEMPLATE = '<div> ' +
-       '<tabset class="panel panel-default ng-scope" type="{{type}}"  role="tablist" vertical="{{vertical}}" ' +
-      'justified="{{justified}}">' + 
-         '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
-        '<tab role="tab" class="tab" id="tab_{{tab.heading}}" aria-controls="panel_{{tab.heading}}" ng-repeat="tab in tabset.tabs" heading="{{tab.heading}}" ' +
-      'active="tab.active" disable="tab.disable" ng-click="go(tab)" aria-selected="{{tab.active}}" tabindex="0">' +
-      '</tab></tabset></div>';
-    
-
-    $templateCache.put('ui-router-tabsOuter-default-template.html', DEFAULT_TEMPLATE);
-}]
-);
 angular.module('ui.router.tabs').directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
 
@@ -138,5 +107,50 @@ angular.module('ui.router.tabs').directive(
     
 
     $templateCache.put('ui-router-tabs-default-template.html', DEFAULT_TEMPLATE);
+}]
+);
+
+angular.module('ui.router.tabs').directive(
+  'tabsouter', ['$rootScope', '$state', function($rootScope, $state) {
+      // 'tabsouter', ['$rootScope', '$state','$stateProvider', function($rootScope, $state,$stateProvider) {
+
+    return {
+      restrict: 'E',
+      scope: {
+        tabData: '=data',
+        RouteInfo: '=route',
+      },
+      controller: ['$scope', function($scope) {
+        console.log("outter Controller");
+//                for (var i = 0; i < RouteInfo.length; i++) {
+//            $stateProvider.state(RouteInfo[i].stateName, {
+//                url: RouteInfo[i].url,
+//                views: {
+//                    '@': {
+//                        templateURL: RouteInfo[i].templateURL,
+//                        controller: RouteInfo[i].controller
+//                    }
+//                }
+//            });
+//        } 
+         }],
+      templateUrl: function(element, attributes) {
+        return attributes.templateUrl || 'ui-router-tabsOuter-default-template.html';
+      }
+    };
+}]
+).run(
+['$templateCache', function($templateCache) {
+    var DEFAULT_TEMPLATE = '<div class="row">' +
+  '<div class="col-xs-18 col-md-4">' +
+    'test<tabs data="tabData" type="pills" vertical="true"></tabs>' +
+  '</div>' +
+  '<div class="col-xs-18 col-md-8">' +
+    '<ui-view autoscroll></ui-view>' +
+  '</div>' +
+'</div>';
+    
+
+    $templateCache.put('ui-router-tabsOuter-default-template.html', DEFAULT_TEMPLATE);
 }]
 );

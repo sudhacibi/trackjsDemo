@@ -30,4 +30,14 @@ app.config(['$stateProvider', function($stateProvider) {
        controller: 'OutofTabCtrl',
     templateUrl: 'outoftabs.html'
   });
+    
+//    $stateProvider.state('accounts', {
+//     url:         '',
+//    controller: 'mainCtrl',
+//    templateUrl: 'example.html'
+//  }).state('outoftabs',{
+//    url:         '/outoftab',
+//       controller: 'OutofTabCtrl',
+//    templateUrl: 'outoftabs.html'
+//  });
 }]);
