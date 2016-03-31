@@ -19,9 +19,61 @@
 //  module.exports = 'ui.router.tabs';
 //}
 
-angular.module('ui.router.tabs', []);
+var tabmodule = angular.module('ui.router.tabs', ['ui.router',
+  'ui.bootstrap', 'ngAria'
+]);
 
-angular.module('ui.router.tabs').directive(
+ tabmodule.config(['$stateProvider', function($stateProvider) {
+     
+//      $routeProvider.when('/accounts', {
+//            redirectTo: '/accounts.personalInfo'
+//        });
+     
+        var tabRoute = [];
+     tabRoute[0] = {stateName: 'accounts',url: '', templateUrl:'example.html',controller: 'ExampleCtrl'};
+      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl'};
+    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl'};
+     tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
+     
+        for (var i = 0; i < tabRoute.length; i++) {
+            $stateProvider.state(tabRoute[i].stateName, {
+                url: tabRoute[i].url,
+//                views: {
+//                    '@': {
+                        templateUrl: tabRoute[i].templateUrl,
+                        controller: tabRoute[i].controller
+//                    }
+//                }
+            });
+        } 
+     
+     
+//  $stateProvider.state('accounts', {
+//    //abstract: true,//scope inheritance by view hierarchy only.
+//    url:         '',
+//    controller: 'ExampleCtrl',
+//    templateUrl: 'example.html',
+////       onEnter: function($state) {
+////    $state.go('accounts.personalInfo');
+////  }
+//  }).state('accounts.personalInfo', {
+//    url:         '/accounts/personalInfo',
+//    controller: 'ExampleCtrl', //sharing the same controller as the parent.
+//    templateUrl: 'user/personalInfo.html'
+//  }).state('accounts.addressInfo', {
+//    url:         '/accounts/addressInfo',
+//     controller: 'ExampleCtrl', //sharing the same controller as the parent.
+//    templateUrl: 'user/accounts/addressInfo.html'
+//  }).state('accounts.securityQuestions', {
+//    url:         '/accounts/securityQuestions',
+//    controller: 'SecurityCtrl',
+//    templateUrl: 'user/accounts/securityQuestions.html'
+//  });
+//    
+
+}]);
+
+ tabmodule.directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
 
     return {
@@ -110,7 +162,7 @@ angular.module('ui.router.tabs').directive(
 }]
 );
 
-angular.module('ui.router.tabs').directive(
+ tabmodule.directive(
   'tabsouter', ['$rootScope', '$state', function($rootScope, $state) {
       // 'tabsouter', ['$rootScope', '$state','$stateProvider', function($rootScope, $state,$stateProvider) {
 
@@ -122,6 +174,7 @@ angular.module('ui.router.tabs').directive(
       },
       controller: ['$scope', function($scope) {
         console.log("outter Controller");
+         
 //                for (var i = 0; i < RouteInfo.length; i++) {
 //            $stateProvider.state(RouteInfo[i].stateName, {
 //                url: RouteInfo[i].url,
