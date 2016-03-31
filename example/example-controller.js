@@ -3,6 +3,11 @@
 var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
     
     $scope.initialiseFlag = $scope.initialiseFlag || false;
+    if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.initialiseFlag){
+        $scope.initialiseFlag = $scope.$parent.$parent.initialiseFlag;
+        console.log("Print parent", $scope.$parent.$parent.initialiseFlag);
+    }
+    
 
   $scope.initialise = function() {
       
@@ -30,6 +35,9 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
       } 
     ]};
       
+      $scope.tabouterdata = {};
+      $scope.tabouterdata.tabData = $scope.tabData;
+      
 //      $scope.tabRoute = [];
 //      $scope.tabRoute[0] = {stateName: 'accounts',url: '', templateUrl:'example.html',controller: 'ExampleCtrl'};
 //      $scope.tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl'};
@@ -50,6 +58,8 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
     
       //labels
       $scope.propertyModel = $scope.propertyModel || {nameLabel: 'nameLabel',address: { addressLabel: 'Address1'}};
+    
+     
     
 }];
 

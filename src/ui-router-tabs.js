@@ -25,14 +25,11 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 
  tabmodule.config(['$stateProvider', function($stateProvider) {
      
-//      $routeProvider.when('/accounts', {
-//            redirectTo: '/accounts.personalInfo'
-//        });
-     
+ 
         var tabRoute = [];
-     tabRoute[0] = {stateName: 'accounts',url: '', templateUrl:'example.html',controller: 'ExampleCtrl'};
-      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl'};
-    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl'};
+     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
+      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
+    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
      tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
      
         for (var i = 0; i < tabRoute.length; i++) {
@@ -41,7 +38,9 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 //                views: {
 //                    '@': {
                         templateUrl: tabRoute[i].templateUrl,
-                        controller: tabRoute[i].controller
+                        controller: tabRoute[i].controller,
+                abstract: tabRoute[i].abstract,
+                parent: tabRoute[i].parent
 //                    }
 //                }
             });
@@ -78,6 +77,7 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 
     return {
       restrict: 'E',
+//         require: "^tabsouter",
       scope: {
         tabset: '=data',
         type: '@',
@@ -174,18 +174,9 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
       },
       controller: ['$scope', function($scope) {
         console.log("outter Controller");
-         
-//                for (var i = 0; i < RouteInfo.length; i++) {
-//            $stateProvider.state(RouteInfo[i].stateName, {
-//                url: RouteInfo[i].url,
-//                views: {
-//                    '@': {
-//                        templateURL: RouteInfo[i].templateURL,
-//                        controller: RouteInfo[i].controller
-//                    }
-//                }
-//            });
-//        } 
+           $scope.state = $state;
+         $scope.allStates = $state.get();
+            console.log("all states", $scope.allStates);
          }],
       templateUrl: function(element, attributes) {
         return attributes.templateUrl || 'ui-router-tabsOuter-default-template.html';
@@ -196,7 +187,7 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 ['$templateCache', function($templateCache) {
     var DEFAULT_TEMPLATE = '<div class="row">' +
   '<div class="col-xs-18 col-md-4">' +
-    'test<tabs data="tabData" type="pills" vertical="true"></tabs>' +
+    '<tabs data="tabData.tabData" type="pills" vertical="true"></tabs>' +
   '</div>' +
   '<div class="col-xs-18 col-md-8">' +
     '<ui-view autoscroll></ui-view>' +
