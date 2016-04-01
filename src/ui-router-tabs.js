@@ -23,16 +23,10 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
   'ui.bootstrap', 'ngAria'
 ]);
 
- tabmodule.config(['$stateProvider', function($stateProvider) {
-     
- 
-        var tabRoute = [];
-     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
-      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
-    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
-     tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
-     
-        for (var i = 0; i < tabRoute.length; i++) {
+tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
+
+    this.setRoute = function (tabRoute) {
+             for (var i = 0; i < tabRoute.length; i++) {
             $stateProvider.state(tabRoute[i].stateName, {
                 url: tabRoute[i].url,
 //                views: {
@@ -45,32 +39,40 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 //                }
             });
         } 
-     
-     
-//  $stateProvider.state('accounts', {
-//    //abstract: true,//scope inheritance by view hierarchy only.
-//    url:         '',
-//    controller: 'ExampleCtrl',
-//    templateUrl: 'example.html',
-////       onEnter: function($state) {
-////    $state.go('accounts.personalInfo');
-////  }
-//  }).state('accounts.personalInfo', {
-//    url:         '/accounts/personalInfo',
-//    controller: 'ExampleCtrl', //sharing the same controller as the parent.
-//    templateUrl: 'user/personalInfo.html'
-//  }).state('accounts.addressInfo', {
-//    url:         '/accounts/addressInfo',
-//     controller: 'ExampleCtrl', //sharing the same controller as the parent.
-//    templateUrl: 'user/accounts/addressInfo.html'
-//  }).state('accounts.securityQuestions', {
-//    url:         '/accounts/securityQuestions',
-//    controller: 'SecurityCtrl',
-//    templateUrl: 'user/accounts/securityQuestions.html'
-//  });
-//    
+    };
+    
+     this.$get = function () {
+      return this;
+    };
 
-}]);
+  }]);
+
+// tabmodule.config(['$stateProvider', function($stateProvider) {
+//     
+// 
+//        var tabRoute = [];
+//     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
+//      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
+//    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
+//     tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
+//     
+//        for (var i = 0; i < tabRoute.length; i++) {
+//            $stateProvider.state(tabRoute[i].stateName, {
+//                url: tabRoute[i].url,
+////                views: {
+////                    '@': {
+//                        templateUrl: tabRoute[i].templateUrl,
+//                        controller: tabRoute[i].controller,
+//                abstract: tabRoute[i].abstract,
+//                parent: tabRoute[i].parent
+////                    }
+////                }
+//            });
+//        } 
+//     
+//
+//
+//}]);
 
  tabmodule.directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
