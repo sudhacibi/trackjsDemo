@@ -1,14 +1,13 @@
 'use strict';
 
 var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
-    console.log("initialiseFlag",$state.current.data.initialiseFlag);
-     $state.current.data.initialiseFlag = $state.current.data.initialiseFlag || false;
-//    $scope.initialiseFlag = $scope.initialiseFlag || false;
+
+    $scope.initialiseFlag = $scope.initialiseFlag || false;
     
-//    if ($scope.initialiseFlag ){
-//     
-//        console.log("I am true, Yeah!");
-//    }
+    if ($scope.initialiseFlag ){
+     
+        console.log("I am true, Yeah!");
+    }
 //    if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.initialiseFlag){
 //        $scope.initialiseFlag = $scope.$parent.$parent.initialiseFlag;
 //        console.log("Print parent", $scope.$parent.$parent.initialiseFlag);
@@ -19,17 +18,14 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
 
   $scope.initialise = function() {
       
-//      $scope.initialiseFlag = true;
+      $scope.initialiseFlag = true;
       
-      $state.current.data.initialiseFlag = true;
-
-
     $scope.go = function(state) {
       $state.go(state);
     };
 
     //this below data also can come dynamically from backend service.  
-    $scope.tabData   = {
+     $scope.tabData    = {
         heading: 'AccountSettings',
         tabs: [
       {
@@ -61,11 +57,13 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
     
   };
     
-//    if (!$scope.initialiseFlag){
-        if (!$state.current.data.initialiseFlag){
+ if (!$scope.initialiseFlag){
+//        if (!$state.current.data.initialiseFlag){
         console.log("initialise only once");
         $scope.initialise();
-    }
+                }
+    
+   // $scope.tabData =  $state.current.data.tabData;
     
       //labels
       $scope.propertyModel = $scope.propertyModel || {nameLabel: 'nameLabel',address: { addressLabel: 'Address1'}};
@@ -75,32 +73,3 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
 }];
 
 angular.module('example').controller('ExampleCtrl', ExampleCtrl);
-
-//'use strict';
-//
-//var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
-//
-//  $scope.initialise = function() {
-//
-//    $scope.go = function(state) {
-//      $state.go(state);
-//    };
-//
-//    $scope.tabData   = {
-//        heading: 'AccountSettings',
-//        tabs: [
-//      {
-//        heading: 'Personal',
-//        route:   'accounts.personalInfo'
-//      },
-//      {
-//        heading: 'Address',
-//        route:   'accounts.addressInfo'
-//      }
-//    ]};
-//  };
-//
-//  $scope.initialise();
-//}];
-//
-//angular.module('example').controller('ExampleCtrl', ExampleCtrl);

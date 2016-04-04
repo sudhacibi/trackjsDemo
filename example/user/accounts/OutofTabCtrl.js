@@ -2,7 +2,9 @@
 
 var OutofTabCtrl = ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state) {
     $scope.go = function(state) {
-      $state.go(state);
+//         $state.forceReload();
+//      $state.go(state,null,{'reload':true});
+        $state.go(state);
     };
  
 }];

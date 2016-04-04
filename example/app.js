@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 var app = angular.module('example', [
   'ui.router',
@@ -7,11 +7,11 @@ var app = angular.module('example', [
     'ngAria'
 ]);
 
-app.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider','$urlRouterProvider','$provide', function($stateProvider, $urlRouterProvider,$provide) {
     
-    // For any unmatched url, redirect to /state1
+       // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/outoftab");
-
+    
         // Now set up the states
         $stateProvider
             .state("outoftabs", {
@@ -48,14 +48,24 @@ app.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $url
 
  app.config(['uiTabsConfigProvider',function (uiTabsConfigProvider) {
      
-        var tabRoute = [];
-     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true,data:{
-         initialiseFlag :  false,
-         propertyModel:  undefined
-      }};
-      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
+
+//     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true,data:{
+//         initialiseFlag :  false,
+//         propertyModel:  undefined,
+//        tabData: undefined 
+//      },onExit:['$state',function($state){ 
+//          console.log('printdata',$state.current); 
+//          $state.current.data.initialiseFlag = false;
+//      
+//      }]
+//      };
+     
+    //configure the route from the application 
+    var tabRoute = [];
+    tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
+    tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
     tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
-     tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
+    tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
      
      
     uiTabsConfigProvider.setRoute(tabRoute);

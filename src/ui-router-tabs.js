@@ -23,22 +23,19 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
   'ui.bootstrap', 'ngAria'
 ]);
 
+//To configure dynamic route
 tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
     this.setRoute = function (tabRoute) {
              for (var i = 0; i < tabRoute.length; i++) {
             $stateProvider.state(tabRoute[i].stateName, {
-                url: tabRoute[i].url,
-//                views: {
-//                    '@': {
+                        url: tabRoute[i].url,
                         templateUrl: tabRoute[i].templateUrl,
                         controller: tabRoute[i].controller,
-                abstract: tabRoute[i].abstract,
-                parent: tabRoute[i].parent,
-                data: tabRoute[i].data
-          
-//                    }
-//                }
+                        abstract: tabRoute[i].abstract,
+                        parent: tabRoute[i].parent,
+                        data: tabRoute[i].data,
+                        onExit: tabRoute[i].onExit
             });
         } 
     };
@@ -82,13 +79,13 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
     return {
       restrict: 'E',
          require: "^tabsouter",
-//      scope: {
-//        tabset: '=data',
-//        type: '@',
-//        justified: '@',
-//        vertical: '@'
-//      },
-        scope: true,
+      scope: {
+        tabset: '=data',
+        type: '@',
+        justified: '@',
+        vertical: '@'
+      },
+      
       link: function(scope) {
           // console.log('inner link, printing outside ctrl'); 
 
@@ -174,16 +171,20 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
     return {
       restrict: 'E',
-      scope: {
-        tabset: '=data',
-        type: '@',
-        justified: '@',
-        vertical: '@'
-      },
+      transclude: true,
+          scope: true,
+//      scope: {
+//        tabset: '=data'
+////        type: '@',
+////        justified: '@',
+////        vertical: '@'
+//      },
       controller: ['$scope', function($scope) {
         console.log("outter Controller");
            $scope.state = $state;
           $scope.child = "child";
+          $scope.type ="pills";
+          $scope.vertical = "true";
          $scope.allStates = $state.get();
             console.log("all states", $scope.allStates);
          }],
@@ -196,7 +197,8 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 ['$templateCache', function($templateCache) {
     var DEFAULT_TEMPLATE = '<div class="row">' +
   '<div class="col-xs-18 col-md-4">' +
-    '<tabs data="tabset" type="type" vertical="vertical"></tabs>' +
+        '<ng-transclude></ng-transclude>'+
+//    '<tabs data="tabset" type="type" vertical="vertical"></tabs>' +
   '</div>' +
   '<div class="col-xs-18 col-md-8">' +
     '<ui-view autoscroll></ui-view>' +
