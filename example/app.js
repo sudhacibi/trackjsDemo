@@ -16,8 +16,8 @@ app.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $url
         $stateProvider
             .state("outoftabs", {
                     url:         '/outoftab',
-       controller: 'OutofTabCtrl',
-    templateUrl: 'outoftabs.html'
+                    controller: 'OutofTabCtrl',
+                    templateUrl: 'outoftabs.html'
             })
         ;
     
@@ -49,7 +49,10 @@ app.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $url
  app.config(['uiTabsConfigProvider',function (uiTabsConfigProvider) {
      
         var tabRoute = [];
-     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
+     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true,data:{
+         initialiseFlag :  false,
+         propertyModel:  undefined
+      }};
       tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
     tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
      tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};

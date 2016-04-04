@@ -34,7 +34,9 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
                         templateUrl: tabRoute[i].templateUrl,
                         controller: tabRoute[i].controller,
                 abstract: tabRoute[i].abstract,
-                parent: tabRoute[i].parent
+                parent: tabRoute[i].parent,
+                data: tabRoute[i].data
+          
 //                    }
 //                }
             });
@@ -79,14 +81,16 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
     return {
       restrict: 'E',
-//         require: "^tabsouter",
-      scope: {
-        tabset: '=data',
-        type: '@',
-        justified: '@',
-        vertical: '@'
-      },
+         require: "^tabsouter",
+//      scope: {
+//        tabset: '=data',
+//        type: '@',
+//        justified: '@',
+//        vertical: '@'
+//      },
+        scope: true,
       link: function(scope) {
+          // console.log('inner link, printing outside ctrl'); 
 
         var updateTabs = function() {
           scope.update_tabs();
@@ -103,7 +107,7 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
         scope.$on('$destroy', unbindStateNotFound);
       },
       controller: ['$scope', function($scope) {
-
+  console.log("inner Controller",$scope.child);
         if (!$scope.tabset) {
           throw new Error('UI Router Tabs: \'data\' attribute not defined, please check documentation for how to use this directive.');
         }
@@ -171,12 +175,15 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
     return {
       restrict: 'E',
       scope: {
-        tabData: '=data',
-        RouteInfo: '=route',
+        tabset: '=data',
+        type: '@',
+        justified: '@',
+        vertical: '@'
       },
       controller: ['$scope', function($scope) {
         console.log("outter Controller");
            $scope.state = $state;
+          $scope.child = "child";
          $scope.allStates = $state.get();
             console.log("all states", $scope.allStates);
          }],
@@ -189,7 +196,7 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 ['$templateCache', function($templateCache) {
     var DEFAULT_TEMPLATE = '<div class="row">' +
   '<div class="col-xs-18 col-md-4">' +
-    '<tabs data="tabData.tabData" type="pills" vertical="true"></tabs>' +
+    '<tabs data="tabset" type="type" vertical="vertical"></tabs>' +
   '</div>' +
   '<div class="col-xs-18 col-md-8">' +
     '<ui-view autoscroll></ui-view>' +

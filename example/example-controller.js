@@ -1,23 +1,34 @@
 'use strict';
 
 var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
+    console.log("initialiseFlag",$state.current.data.initialiseFlag);
+     $state.current.data.initialiseFlag = $state.current.data.initialiseFlag || false;
+//    $scope.initialiseFlag = $scope.initialiseFlag || false;
     
-    $scope.initialiseFlag = $scope.initialiseFlag || false;
-    if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.initialiseFlag){
-        $scope.initialiseFlag = $scope.$parent.$parent.initialiseFlag;
-        console.log("Print parent", $scope.$parent.$parent.initialiseFlag);
-    }
+//    if ($scope.initialiseFlag ){
+//     
+//        console.log("I am true, Yeah!");
+//    }
+//    if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.initialiseFlag){
+//        $scope.initialiseFlag = $scope.$parent.$parent.initialiseFlag;
+//        console.log("Print parent", $scope.$parent.$parent.initialiseFlag);
+//    }
+    
+
     
 
   $scope.initialise = function() {
       
-      $scope.initialiseFlag = true;
+//      $scope.initialiseFlag = true;
+      
+      $state.current.data.initialiseFlag = true;
 
 
     $scope.go = function(state) {
       $state.go(state);
     };
 
+    //this below data also can come dynamically from backend service.  
     $scope.tabData   = {
         heading: 'AccountSettings',
         tabs: [
@@ -35,23 +46,23 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
       } 
     ]};
       
-      $scope.tabouterdata = {};
-      $scope.tabouterdata.tabData = $scope.tabData;
       
-//      $scope.tabRoute = [];
-//      $scope.tabRoute[0] = {stateName: 'accounts',url: '', templateUrl:'example.html',controller: 'ExampleCtrl'};
-//      $scope.tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl'};
-//      $scope.tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl'};
-//      $scope.tabRoute[2] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
-          
-   
+   //get the data before we call this below state.go
+     
+ 
+//      CASService.fetchPersonelInfo().get().$promise.then(function(data){
+//        $scope.propertyModel  = data;
+//            $state.go('accounts.personalInfo');
+//      });
+//   
       
        $state.go('accounts.personalInfo');
       
     
   };
     
-    if (!$scope.initialiseFlag){
+//    if (!$scope.initialiseFlag){
+        if (!$state.current.data.initialiseFlag){
         console.log("initialise only once");
         $scope.initialise();
     }
