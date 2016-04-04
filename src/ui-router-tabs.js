@@ -46,33 +46,6 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
   }]);
 
-// tabmodule.config(['$stateProvider', function($stateProvider) {
-//     
-// 
-//        var tabRoute = [];
-//     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
-//      tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
-//    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
-//     tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
-//     
-//        for (var i = 0; i < tabRoute.length; i++) {
-//            $stateProvider.state(tabRoute[i].stateName, {
-//                url: tabRoute[i].url,
-////                views: {
-////                    '@': {
-//                        templateUrl: tabRoute[i].templateUrl,
-//                        controller: tabRoute[i].controller,
-//                abstract: tabRoute[i].abstract,
-//                parent: tabRoute[i].parent
-////                    }
-////                }
-//            });
-//        } 
-//     
-//
-//
-//}]);
-
  tabmodule.directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
 
@@ -87,7 +60,6 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
       },
       
       link: function(scope) {
-          // console.log('inner link, printing outside ctrl'); 
 
         var updateTabs = function() {
           scope.update_tabs();
@@ -104,7 +76,7 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
         scope.$on('$destroy', unbindStateNotFound);
       },
       controller: ['$scope', function($scope) {
-  console.log("inner Controller",$scope.child);
+
         if (!$scope.tabset) {
           throw new Error('UI Router Tabs: \'data\' attribute not defined, please check documentation for how to use this directive.');
         }
@@ -167,26 +139,14 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
  tabmodule.directive(
   'tabsouter', ['$rootScope', '$state', function($rootScope, $state) {
-      // 'tabsouter', ['$rootScope', '$state','$stateProvider', function($rootScope, $state,$stateProvider) {
-
     return {
       restrict: 'E',
       transclude: true,
-          scope: true,
-//      scope: {
-//        tabset: '=data'
-////        type: '@',
-////        justified: '@',
-////        vertical: '@'
-//      },
+      scope: true,
       controller: ['$scope', function($scope) {
-        console.log("outter Controller");
-           $scope.state = $state;
-          $scope.child = "child";
-          $scope.type ="pills";
-          $scope.vertical = "true";
-         $scope.allStates = $state.get();
-            console.log("all states", $scope.allStates);
+//        console.log("outter Controller");
+//        $scope.allStates = $state.get();
+//        console.log("all states", $scope.allStates);
          }],
       templateUrl: function(element, attributes) {
         return attributes.templateUrl || 'ui-router-tabsOuter-default-template.html';

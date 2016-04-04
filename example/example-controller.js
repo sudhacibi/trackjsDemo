@@ -14,8 +14,6 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
 //    }
     
 
-    
-
   $scope.initialise = function() {
       
       $scope.initialiseFlag = true;
@@ -51,7 +49,7 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
 //            $state.go('accounts.personalInfo');
 //      });
 //   
-      
+      $scope.propertyModel = {nameLabel: 'nameLabel',address: { addressLabel: 'Address1'}};
        $state.go('accounts.personalInfo');
       
     
@@ -66,7 +64,7 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
    // $scope.tabData =  $state.current.data.tabData;
     
       //labels
-      $scope.propertyModel = $scope.propertyModel || {nameLabel: 'nameLabel',address: { addressLabel: 'Address1'}};
+     // $scope.propertyModel = $scope.propertyModel || {nameLabel: 'nameLabel',address: { addressLabel: 'Address1'}};
     
      
     
