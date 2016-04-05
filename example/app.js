@@ -48,25 +48,13 @@ app.config(['$stateProvider','$urlRouterProvider','$provide', function($statePro
 
  app.config(['uiTabsConfigProvider',function (uiTabsConfigProvider) {
      
-
-//     tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true,data:{
-//         initialiseFlag :  false,
-//         propertyModel:  undefined,
-//        tabData: undefined 
-//      },onExit:['$state',function($state){ 
-//          console.log('printdata',$state.current); 
-//          $state.current.data.initialiseFlag = false;
-//      
-//      }]
-//      };
-     
     //configure the route from the application 
-    var tabRoute = [];
-    tabRoute[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
-    tabRoute[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
-    tabRoute[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
-    tabRoute[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
+    var tabRoutes = [];
+    tabRoutes[0] = {stateName: 'accounts',url: '/accounts', templateUrl:'example.html',controller: 'ExampleCtrl',abstract: true};
+    tabRoutes[1] = {stateName: 'accounts.personalInfo',url: '/accounts/personalInfo', templateUrl:'user/personalInfo.html',controller: 'ExampleCtrl', parent: 'accounts'};
+    tabRoutes[2] = {stateName: 'accounts.addressInfo',url: '/accounts/addressInfo',templateUrl:'user/accounts/addressInfo.html',controller: 'ExampleCtrl',parent: 'accounts'};
+    tabRoutes[3] = {stateName: 'accounts.securityQuestions',url: '/accounts/securityQuestions',templateUrl:'user/accounts/securityQuestions.html',controller:'SecurityCtrl'};
      
      
-    uiTabsConfigProvider.setRoute(tabRoute);
+    uiTabsConfigProvider.setRoutes(tabRoutes);
   }]);

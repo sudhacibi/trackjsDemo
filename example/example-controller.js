@@ -1,17 +1,18 @@
-'use strict';
+(
+  function () {
+    angular.module('example')
+      .controller('ExampleCtrl', ExampleCtrl);
+      
+      ExampleCtrl.$inject = ['$rootScope', '$state', '$scope', '$stateParams'];
 
-var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
-
+ function ExampleCtrl($rootScope, $state, $scope) {
+ 'use strict';
     $scope.initialiseFlag = $scope.initialiseFlag || false;
     
     if ($scope.initialiseFlag ){
      
         console.log("I am true, Yeah!");
     }
-//    if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.initialiseFlag){
-//        $scope.initialiseFlag = $scope.$parent.$parent.initialiseFlag;
-//        console.log("Print parent", $scope.$parent.$parent.initialiseFlag);
-//    }
     
 
   $scope.initialise = function() {
@@ -68,6 +69,9 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
     
      
     
-}];
+}
+  }()
+);
 
-angular.module('example').controller('ExampleCtrl', ExampleCtrl);
+
+//angular.module('example').controller('ExampleCtrl', ExampleCtrl);

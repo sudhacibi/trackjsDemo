@@ -26,16 +26,16 @@ var tabmodule = angular.module('ui.router.tabs', ['ui.router',
 //To configure dynamic route
 tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 
-    this.setRoute = function (tabRoute) {
-             for (var i = 0; i < tabRoute.length; i++) {
-            $stateProvider.state(tabRoute[i].stateName, {
-                        url: tabRoute[i].url,
-                        templateUrl: tabRoute[i].templateUrl,
-                        controller: tabRoute[i].controller,
-                        abstract: tabRoute[i].abstract,
-                        parent: tabRoute[i].parent,
-                        data: tabRoute[i].data,
-                        onExit: tabRoute[i].onExit
+    this.setRoutes = function (tabRoutes) {
+             for (var i = 0; i < tabRoutes.length; i++) {
+            $stateProvider.state(tabRoutes[i].stateName, {
+                        url: tabRoutes[i].url,
+                        templateUrl: tabRoutes[i].templateUrl,
+                        controller: tabRoutes[i].controller,
+                        abstract: tabRoutes[i].abstract,
+                        parent: tabRoutes[i].parent,
+                        data: tabRoutes[i].data,
+                        onExit: tabRoutes[i].onExit
             });
         } 
     };
