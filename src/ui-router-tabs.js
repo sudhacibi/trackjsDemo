@@ -125,6 +125,7 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 ).run(
 ['$templateCache', function($templateCache) {
     var DEFAULT_TEMPLATE = '<div> ' +
+      //  '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
        '<tabset class="panel panel-default ng-scope" type="{{type}}"  role="tablist" vertical="{{vertical}}" ' +
       'justified="{{justified}}">' + 
          '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
