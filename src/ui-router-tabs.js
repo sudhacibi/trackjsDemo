@@ -124,17 +124,24 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
 }]
 ).run(
 ['$templateCache', function($templateCache) {
-    var DEFAULT_TEMPLATE = '<div> ' +
-      //  '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
-       '<tabset class="panel panel-default ng-scope" type="{{type}}"  role="tablist" vertical="{{vertical}}" ' +
+    
+    var OVERRIDE_UITAB_TEMPLATE =  '<li ng-class="{active: active, disabled: disabled}">' +
+     '<a href ng-click="select()" tabindex="-1" tab-heading-transclude>{{heading}}</a>' +
+    '</li>' ;
+    
+    
+    var DEFAULT_TEMPLATE = '<div class="panel panel-default ng-scope" > ' +
+        '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
+       '<tabset type="{{type}}"  role="tablist" vertical="{{vertical}}" ' +
       'justified="{{justified}}">' + 
-         '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
+//         '<div class="panel-heading"> <h3 class="panel-title">{{tabset.heading}}</h3> </div>'+
         '<tab role="tab" class="tab" id="tab_{{tab.heading}}" aria-controls="panel_{{tab.heading}}" ng-repeat="tab in tabset.tabs" heading="{{tab.heading}}" ' +
-      'active="tab.active" disable="tab.disable" ng-click="go(tab)" aria-selected="{{tab.active}}" tabindex="0">' +
+      'active="tab.active" disable="tab.disable" ng-click="go(tab)" aria-selected="{{tab.active}}" template-url="ui-tabs-override-template.html" tabindex="0">' +
       '</tab></tabset></div>';
     
 
     $templateCache.put('ui-router-tabs-default-template.html', DEFAULT_TEMPLATE);
+     $templateCache.put('ui-tabs-override-template.html',OVERRIDE_UITAB_TEMPLATE);
 }]
 );
 
@@ -170,3 +177,17 @@ tabmodule.provider('uiTabsConfig',['$stateProvider', function($stateProvider) {
     $templateCache.put('ui-router-tabsOuter-default-template.html', DEFAULT_TEMPLATE);
 }]
 );
+
+tabmodule.config(['$provide',Decorate]);
+
+//This decorator is only for override the ui bootstrap tab directive. The ng-click() anchor tag is marked with tabindex=-1.
+//So that when you tab through the tabs it only tabs once. 
+function Decorate($provide) {
+  $provide.decorator('tabDirective',['$delegate', function($delegate) {
+    var directive = $delegate[0];
+
+    directive.templateUrl = "ui-tabs-override-template.html";
+    
+   return $delegate;
+  }]);
+}

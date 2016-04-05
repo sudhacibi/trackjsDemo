@@ -3,6 +3,7 @@
 var app = angular.module('example', [
   'ui.router',
   'ui.bootstrap',
+//    'ui.bootstrap.tpls',
   'ui.router.tabs',
     'ngAria'
 ]);
