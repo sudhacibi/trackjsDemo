@@ -32,6 +32,11 @@ var OutofTabCtrl = ['$rootScope', '$scope', '$state', function($rootScope, $scop
         trackJs.configure({ userId: "SUd123"});
         throw new error("For test throwing an error");
     };
+    
+        $scope.test1 = function(){
+        
+        return something();
+    };
  
 }];
 
