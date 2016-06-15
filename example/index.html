@@ -13,11 +13,33 @@
   <div ui-view></div>
 </div>
     
+    <!-- BEGIN TRACKJS : This is for testing purpose only. DO NOT MERGE INTO 1606-->
+    <script>
+        window._trackJs = {
+            onError: function (payload) {
+
+                //These are are standard server errors.
+                if (payload.message === '400 Bad Request') {
+                    return false;
+                }
+                return true;
+            },
+            console: {
+                display: false // Hides console logs from the users/dev tools, but keeps them in your timeline
+            }
+        }
+    </script>
+
+<!--    <script type="text/javascript">window._trackJs = { token: '8c68bf9e72e840d9ab84d32441661cb1' };</script>-->
+    <script type="text/javascript">window._trackJs = { token: 'df03b692961443d793b3ee9f039028c7' };</script>
+    <script type="text/javascript" src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
+    <!-- END TRACKJS -->
  <script src="../bower_components/angular/angular.js"></script>
 <!--<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
 <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.js"></script>
+<!--
 <script src="../src/ui-router-tabs.js"></script>
 
 <script src="app.js"></script>
@@ -25,6 +47,9 @@
     <script src="main-controller.js"></script>
     <script src="user/accounts/OutofTabCtrl.js"></script>
 <script src="user/accounts/settings-controller.js"></script>
+-->
+    
+    <script src="../dest/minified.js"></script>
 
 <link rel="stylesheet" href="style.css">
     
