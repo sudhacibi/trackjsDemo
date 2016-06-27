@@ -405,7 +405,7 @@ var OutofTabCtrl = ['$rootScope', '$scope', '$state','$window', function($rootSc
     
         $scope.test1 = function($window){
         
-                  function CustomError(message) {
+        function CustomError(message) {
                 Error.captureStackTrace(this);
                 this.message = message;
                 this.name = "SomeCustomError";
