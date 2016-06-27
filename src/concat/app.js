@@ -370,7 +370,7 @@ angular.module('example').controller('mainCtrl', mainCtrl);
 
 'use strict';
 
-var OutofTabCtrl = ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state) {
+var OutofTabCtrl = ['$rootScope', '$scope', '$state','$window', function($rootScope, $scope, $state,$window) {
     $scope.go = function(state) {
                 // Then, just add any key/value string combination that you want to track!
         
@@ -403,9 +403,16 @@ var OutofTabCtrl = ['$rootScope', '$scope', '$state', function($rootScope, $scop
         throw new error("For test throwing an error");
     };
     
-        $scope.test1 = function(){
+        $scope.test1 = function($window){
         
-        return something();
+                  function CustomError(message) {
+                Error.captureStackTrace(this);
+                this.message = message;
+                this.name = "SomeCustomError";
+            }
+            CustomError.prototype = Object.create(Error.prototype);
+
+            $window.CustomError = CustomError;
     };
  
 }];
